@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather</title>
+	<link rel="icon" href="/image/weather.png">
+	<style type="text/css">
+    body {
+    	color: #333333;
+    	font-family: arial;
+    	max-width: 650px;
+    	margin: 0 auto;
+    	padding: 0 16px;
+
+    	display: flex;
+    	flex-direction: column;
+    	min-height: 100vh;
+    }
+    footer {
+		color: #888888;
+		border-top: 1px solid #eeeeee;
+		margin-top: 16px;
+		padding: 16px 0;
+	}
+
+	header {
+		margin-top: 16px;
+		margin-bottom: 48px;
+	}
+
+	h1 {
+		font-size: 64px;
+		margin-bottom: 16px;
+	}
+
+	header a {
+		color: #888888;
+		margin-right: 16px;
+		text-decoration: none;
+		
+	}
+
+	.main-content {
+		flex-grow: 1;
+	}
+
+	</style>
+</head>
+<body>
+	<div class="main-content">
+		{{>header}}
+		<p>Use this site to get weather update!</p>
+		<form>
+			<input type="text" name="location" placeholder="type your location here">
+			<button>Search</button>
+		</form>
+		<p id="mm"></p>
+	</div>
+
+	{{>footer}}
+
+	<script>
+		const addr= document.querySelector('input')
+		const f=document.querySelector('form')
+		const m=document.querySelector('#mm')
+		f.addEventListener('submit', (e)=>{
+			e.preventDefault()
+
+			m.textContent="Loading..."
+			fetch('http://localhost:3000/weather?address='+addr.value)
+			.then((response)=>{
+					response.text().then((text)=>{
+					m.textContent=text
+			    })
+		    })
+		})
+
+	</script>
+</body>
+</html>
